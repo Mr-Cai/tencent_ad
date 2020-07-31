@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tencent_ad/o.dart';
-import 'package:tencent_ad/tencent_ad.dart';
+import 'package:tencent_ad/tencent_ad_plugin.dart';
 
+/// 插屏广告
 class IntersAD {
   final String posID;
   final IntersADCallback adEventCallback;

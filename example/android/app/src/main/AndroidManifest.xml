@@ -8,7 +8,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher"
-        android:label="tencent_ad_example">
+        android:label="TencentAD">
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -3,8 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:tencent_ad/o.dart';
 
-class NativeAD extends StatefulWidget {
-  const NativeAD({
+/// 原生模板广告
+class NativeExpress extends StatefulWidget {
+  const NativeExpress({
     Key key,
     this.posID,
     this.requestCount: 5,
@@ -18,24 +19,24 @@ class NativeAD extends StatefulWidget {
   final bool refreshOnCreate;
 
   @override
-  NativeADState createState() => NativeADState();
+  NativeExpressState createState() => NativeExpressState();
 }
 
-class NativeADState extends State<NativeAD> {
+class NativeExpressState extends State<NativeExpress> {
   MethodChannel _methodChannel;
 
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       return UiKitView(
-        viewType: '$nativeID',
+        viewType: '$nativeExpressID',
         onPlatformViewCreated: _onPlatformViewCreated,
         creationParams: {'posID': widget.posID, 'count': widget.requestCount},
         creationParamsCodec: StandardMessageCodec(),
       );
     }
     return AndroidView(
-      viewType: '$nativeID',
+      viewType: '$nativeExpressID',
       onPlatformViewCreated: _onPlatformViewCreated,
       creationParams: {'posID': widget.posID, 'count': widget.requestCount},
       creationParamsCodec: const StandardMessageCodec(),
@@ -43,7 +44,7 @@ class NativeADState extends State<NativeAD> {
   }
 
   void _onPlatformViewCreated(int id) {
-    this._methodChannel = MethodChannel('$nativeID\_$id');
+    this._methodChannel = MethodChannel('$nativeExpressID\_$id');
     this._methodChannel.setMethodCallHandler(_handleMethodCall);
     if (this.widget.refreshOnCreate == true) {
       this.refreshAD();
@@ -108,12 +109,12 @@ class NativeADState extends State<NativeAD> {
 class NativeADWidget extends StatefulWidget {
   final String posID;
   final int requestCount;
-  final GlobalKey<NativeADState> adKey;
+  final GlobalKey<NativeExpressState> adKey;
   final NativeADEventCallback adEventCallback;
   final double loadingHeight;
 
   NativeADWidget({
-    GlobalKey<NativeADState> adKey,
+    GlobalKey<NativeExpressState> adKey,
     this.posID,
     this.requestCount,
     this.adEventCallback,
@@ -127,14 +128,14 @@ class NativeADWidget extends StatefulWidget {
 
 class NativeADWidgetState extends State<NativeADWidget> {
   double _height;
-  NativeAD _ad;
+  NativeExpress _ad;
 
   NativeADWidgetState({double height}) : _height = height;
 
   @override
   void initState() {
     super.initState();
-    _ad = NativeAD(
+    _ad = NativeExpress(
       posID: widget.posID,
       key: widget.adKey,
       requestCount: widget.requestCount,

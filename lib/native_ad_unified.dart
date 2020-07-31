@@ -1,15 +1,15 @@
-// 原生自渲染广告
 import 'package:flutter/services.dart';
 import 'package:tencent_ad/o.dart';
-import 'package:tencent_ad/tencent_ad.dart';
+import 'tencent_ad_plugin.dart';
 
-class NativeRenderAD {
+/// 原生自渲染广告
+class NativeUnified {
   final String posID;
   final NativeRenderCallback adEventCallback;
   MethodChannel _channel;
 
-  NativeRenderAD({this.posID, this.adEventCallback}) {
-    _channel = MethodChannel('$nativeDIYID\_$posID');
+  NativeUnified({this.posID, this.adEventCallback}) {
+    _channel = MethodChannel('$nativeUnifiedID\_$posID');
     _channel.setMethodCallHandler(_handleCall);
     TencentADPlugin.createNativeRender(posID: posID);
   }

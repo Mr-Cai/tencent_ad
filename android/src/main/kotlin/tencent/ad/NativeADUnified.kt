@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-class NativeADDIY(
+class NativeADUnified(
         private val context: Context,
         private val posID: String,
         messenger: BinaryMessenger
@@ -21,7 +21,7 @@ class NativeADDIY(
     private var adData: NativeUnifiedADData? = null // 广告数据
 
     private val methodChannel: MethodChannel by lazy {
-        MethodChannel(messenger, "${O.nativeDIYID}_$posID")
+        MethodChannel(messenger, "${O.nativeUnifiedID}_$posID")
     }
 
     init {
@@ -45,7 +45,7 @@ class NativeADDIY(
     }
 
     private fun loadAD() {
-        nativeUnifiedAD = NativeUnifiedAD(context, O.nativeDIYID, this)
+        nativeUnifiedAD = NativeUnifiedAD(context, O.nativeUnifiedID, this)
         nativeUnifiedAD.run {
             setMinVideoDuration(0)
             setMaxVideoDuration(0)

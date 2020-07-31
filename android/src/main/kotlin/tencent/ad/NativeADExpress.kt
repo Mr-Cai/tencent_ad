@@ -24,7 +24,7 @@ import io.flutter.plugin.platform.PlatformViewFactory
 import tencent.ad.O.TAG
 import java.util.*
 
-class NativeAD(
+class NativeADExpress(
         context: Context?,
         messenger: BinaryMessenger?,
         posID: Int,
@@ -109,7 +109,7 @@ class NativeAD(
 
     override fun onNoAD(error: AdError) {
         methodChannel!!.invokeMethod("onNoAD", null)
-        Log.i(TAG, "NativeAD onNoAD:无广告 错误码:${error.errorCode} ${error.errorMsg}")
+        Log.i(TAG, "NativeADExpress onNoAD:无广告 错误码:${error.errorCode} ${error.errorMsg}")
     }
 
     override fun onADLoaded(adList: List<NativeExpressADView>) {
@@ -169,7 +169,7 @@ class NativeAD(
     }
 
     init {
-        methodChannel = MethodChannel(messenger, "${O.nativeID}_$posID")
+        methodChannel = MethodChannel(messenger, "${O.nativeExpressID}_$posID")
         methodChannel.setMethodCallHandler(this)
         container = FrameLayout(context!!)
         container.layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
@@ -183,7 +183,7 @@ class NativeAD(
     class NativeTemplateViewFactory(private val messenger: BinaryMessenger) :
             PlatformViewFactory(StandardMessageCodec.INSTANCE) {
         override fun create(context: Context, id: Int, params: Any): PlatformView {
-            return NativeAD(context, messenger, id, params as Map<String?, Any?>)
+            return NativeADExpress(context, messenger, id, params as Map<String?, Any?>)
         }
     }
 }

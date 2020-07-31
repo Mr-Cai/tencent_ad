@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'o.dart';
 
+/// 横幅广告
 class BannerAD extends StatefulWidget {
   const BannerAD({
     Key key,

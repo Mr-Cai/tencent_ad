@@ -2,14 +2,15 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:tencent_ad/o.dart';
-export 'tencent_ad.dart';
-export 'native_render.dart';
-export 'native_template.dart';
-export 'splash.dart';
-export 'banner.dart';
-export 'inters.dart';
-export 'reward.dart';
+export 'tencent_ad_plugin.dart';
+export 'native_ad_unified.dart';
+export 'native_ad_express.dart';
+export 'splash_ad.dart';
+export 'banner_ad.dart';
+export 'inters_ad.dart';
+export 'reward_ad.dart';
 
+/// 插件桥接方法全局类
 class TencentADPlugin {
   static const MethodChannel channel = const MethodChannel(pluginID);
 

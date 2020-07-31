@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'tencent_ad.dart';
+import 'tencent_ad_plugin.dart';
 import 'o.dart';
 
+/// 闪屏广告
 class SplashAD {
   MethodChannel _methodChannel;
 

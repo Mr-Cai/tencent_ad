@@ -2,12 +2,12 @@ name: tencent_ad
 description: "The plugin is bridge of the official SDK,
 allowing Chinese developers to make money"
 
-version: 1.0.2+3
+version: 1.0.3
 homepage: https://github.com/Mr-Cai/tencent_ad
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.10.0"
+  flutter: ">=1.17.0 <2.0.0"
 
 dependencies:
   flutter:

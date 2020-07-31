@@ -1,7 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:tencent_ad/o.dart';
-import 'package:tencent_ad/tencent_ad.dart';
+import 'tencent_ad_plugin.dart';
 
+/// 激励视频广告
 class RewardAD {
   final String posID;
   final RewardADCallback adEventCallback;

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tencent_ad/tencent_ad.dart';
+import 'package:tencent_ad/tencent_ad_plugin.dart';
 
 void main() {
   runApp(TencentADApp());
@@ -114,58 +114,6 @@ class _HomePageState extends State<HomePage> {
         crossAxisCount: 3,
         children: [
           ItemIcon(
-            icon: 'reward_video',
-            name: '激励视频广告',
-            onTap: () {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => RewardADWidget(
-                  configID['rewardID'],
-                ),
-              );
-            },
-          ),
-          ItemIcon(
-            icon: 'interstital_ad',
-            name: '插屏广告',
-            onTap: () {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => IntersADWidget(
-                  configID['intersID'],
-                ),
-              );
-            },
-          ),
-          ItemIcon(
-            icon: 'banner_ad',
-            name: '横幅广告',
-            onTap: () {
-              showModalBottomSheet<void>(
-                context: context,
-                enableDrag: true,
-                builder: (context) {
-                  return _buildBanner();
-                },
-              );
-            },
-          ),
-          ItemIcon(
-            icon: 'origin_ad',
-            name: '原生广告',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return NativeADPage();
-                  },
-                ),
-              );
-            },
-          ),
-          ItemIcon(
             icon: 'splash_ad',
             name: '闪屏广告',
             onTap: () {
@@ -187,6 +135,71 @@ class _HomePageState extends State<HomePage> {
                       default:
                     }
                   }).showAD();
+            },
+          ),
+          ItemIcon(
+            icon: 'banner_ad',
+            name: '横幅广告',
+            onTap: () {
+              showModalBottomSheet<void>(
+                context: context,
+                enableDrag: true,
+                builder: (context) {
+                  return _buildBanner();
+                },
+              );
+            },
+          ),
+          ItemIcon(
+            icon: 'inters_ad',
+            name: '插屏广告',
+            onTap: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => IntersADWidget(
+                  configID['intersID'],
+                ),
+              );
+            },
+          ),
+          ItemIcon(
+            icon: 'reward_ad',
+            name: '激励视频广告',
+            onTap: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => RewardADWidget(
+                  configID['rewardID'],
+                ),
+              );
+            },
+          ),
+          ItemIcon(
+            icon: 'native_ad_express',
+            name: '原生模板广告',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return NativeExpressPage();
+                  },
+                ),
+              );
+            },
+          ),
+          ItemIcon(
+            icon: 'native_ad_unified',
+            name: '原生自渲染广告',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return NativeUnifiedPage();
+                  },
+                ),
+              );
             },
           ),
         ],
@@ -367,129 +380,27 @@ class RewardADWidgetState extends State<RewardADWidget> {
   }
 }
 
-class NativeADPage extends StatefulWidget {
+class NativeExpressPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _NativeADPageState();
+  State<StatefulWidget> createState() => _NativeExpressPageState();
 }
 
-class _NativeADPageState extends State<NativeADPage> {
-  bool isToogle = true;
-
-  @override
-  void initState() {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-    );
-    super.initState();
-  }
-
+class _NativeExpressPageState extends State<NativeExpressPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text(
-          '腾讯广告',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.values[0],
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              showMenu(
-                context: context,
-                position: RelativeRect.fromLTRB(1.0, 80.0, 0.0, 32.0),
-                items: [
-                  PopupMenuItem(
-                    child: Text(isToogle ? '单个模版+自渲染' : '自渲染&模版消息流'),
-                    value: 0,
-                  ),
-                ],
-              ).then((value) {
-                switch (value) {
-                  case 0:
-                    setState(() => isToogle = !isToogle);
-                    break;
-                  default:
-                }
-              });
-            },
-          )
-        ],
-      ),
-      body: isToogle
-          ? ListView.builder(
-              itemCount: 6,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                if (index % 2 == 0) {
-                  return NativeADWidget(posID: configID['nativeID']);
-                }
-                return Container(
-                  height: 240.0,
-                  margin: const EdgeInsets.all(9.0),
-                  color: Colors.orangeAccent,
-                );
-              },
-            )
-          : NativeRenderWidget(),
-    );
+    return Container();
   }
 }
 
-class NativeRenderWidget extends StatefulWidget {
+class NativeUnifiedPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _NativeRenderWidgetState();
+  State<StatefulWidget> createState() => _NativeUnifiedPageState();
 }
 
-class _NativeRenderWidgetState extends State<NativeRenderWidget> {
-  double adHeight;
-  bool adRemoved = false;
-  final _adKey = GlobalKey<NativeADState>();
-
+class _NativeUnifiedPageState extends State<NativeUnifiedPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: adHeight == null ? 1 : adHeight,
-          child: NativeAD(
-            key: _adKey,
-            posID: configID['nativeID'],
-            adEventCallback: (event, args) {
-              if (event == NativeADEvent.onLayoutChange && mounted) {
-                setState(() {
-                  // 根据选择的广告位模板尺寸计算，这里是1280x720
-                  adHeight = MediaQuery.of(context).size.width *
-                      args['height'] /
-                      args['width'];
-                  print(args['height']);
-                  print(args['width']);
-                });
-                return;
-              }
-              if (event == NativeADEvent.onADClosed) {
-                setState(() {
-                  adRemoved = true;
-                });
-              }
-            },
-            refreshOnCreate: true,
-            requestCount: 1,
-          ),
-        ),
-      ],
-    );
+    return Container();
   }
 }
 
@@ -497,13 +408,13 @@ Map<String, String> get configID {
   switch (defaultTargetPlatform) {
     case TargetPlatform.android:
       return {
-        'appID': '1109716769',
-        'splashID': '7020785136977336',
-        'bannerID': '9040882216019714',
-        'intersID': '2041008945668154',
-        'rewardID': '6021002701726334',
-        'nativeID': '7071115139492917',
-        'nativeDIYID': '8041808915486340',
+        'appID': '1101152570',
+        'splashID': '8863364436303842593',
+        'bannerID': '4080052898050840',
+        'intersID': '4080298282218338',
+        'rewardID': '6040295592058680',
+        'nativeExpressID': '9061615683013706',
+        'nativeUnifiedID': '4090398440079274',
       };
       break;
     case TargetPlatform.iOS:
@@ -513,8 +424,8 @@ Map<String, String> get configID {
         'bannerID': '1080958885885321',
         'intersID': '1050652855580392',
         'rewardID': '9040714184494018',
-        'nativeID': '1020922903364636',
-        'nativeDIYID': '',
+        'nativeExpressID': '1020922903364636',
+        'nativeUnifiedID': '',
       };
       break;
     default:

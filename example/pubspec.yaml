@@ -1,7 +1,7 @@
 name: tencent_ad_example
 description: 欢迎指正
 publish_to: 'https://pub.dev/packages/tencent_ad' 
-version: 1.0.2
+version: 1.0.3
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

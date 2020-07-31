@@ -7,7 +7,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import tencent.ad.O.bannerID
-import tencent.ad.O.nativeID
+import tencent.ad.O.nativeExpressID
 import java.util.*
 
 @Suppress("SpellCheckingInspection")
@@ -45,7 +45,7 @@ class TencentADPlugin : MethodCallHandler {
             "loadNativeRender" -> {
                 val posID = "${arguments["posID"]}"
                 if (rewardMap.containsKey(posID)) rewardMap[posID]?.closeAD()
-                renderMap[posID] = NativeADDIY(activity, posID, registrar.messenger())
+                renderMap[posID] = NativeADUnified(activity, posID, registrar.messenger())
                 result.success(true)
             }
             else -> result.notImplemented()
@@ -63,7 +63,7 @@ class TencentADPlugin : MethodCallHandler {
 
         private val intersMap = HashMap<String, IntersAD>()
         private val rewardMap = HashMap<String, RewardAD>()
-        private val renderMap = HashMap<String, NativeADDIY>()
+        private val renderMap = HashMap<String, NativeADUnified>()
 
         fun removeInterstitial(posID: String?) {
             intersMap.remove(posID)
@@ -84,8 +84,8 @@ class TencentADPlugin : MethodCallHandler {
                     BannerAD.BannerADFactory(registrar.messenger())
             )
             registrar.platformViewRegistry().registerViewFactory(
-                    nativeID,
-                    NativeAD.NativeTemplateViewFactory(registrar.messenger())
+                    nativeExpressID,
+                    NativeADExpress.NativeTemplateViewFactory(registrar.messenger())
             )
         }
     }
