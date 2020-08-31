@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await TencentADPlugin.tencentADVersion, '42');
+    expect(TencentADPlugin.tencentADVersion, '42');
   });
 }

@@ -1,5 +1,6 @@
 package tencent.ad
 
+@Suppress("SpellCheckingInspection")
 object O {
     const val TAG = "腾讯广告调试日志"
     var appID = ""

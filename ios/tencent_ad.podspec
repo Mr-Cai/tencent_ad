@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'tencent_ad'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -16,7 +16,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'GDTMobSDK', '~> 4.11.9'
+  s.dependency 'GDTMobSDK', '~> 4.11.10'
   s.static_framework = true
 
   s.platform = :ios, '9.0'

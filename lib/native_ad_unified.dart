@@ -3,42 +3,38 @@ import 'package:tencent_ad/o.dart';
 import 'tencent_ad_plugin.dart';
 
 /// 原生自渲染广告
-class NativeUnified {
+class NativeADUnified {
   final String posID;
-  final NativeRenderCallback adEventCallback;
+  final NativeUnifiedCallback callback;
   MethodChannel _channel;
 
-  NativeUnified({this.posID, this.adEventCallback}) {
+  NativeADUnified({this.posID, this.callback}) {
     _channel = MethodChannel('$nativeUnifiedID\_$posID');
     _channel.setMethodCallHandler(_handleCall);
-    TencentADPlugin.createNativeRender(posID: posID);
+    TencentADPlugin.loadNativeADUnified(posID: posID);
   }
 
   Future<void> _handleCall(MethodCall call) async {
-    if (adEventCallback != null) {
-      NativeRenderEvent event;
+    if (callback != null) {
+      NativeUnifiedEvent event;
       switch (call.method) {
         case 'onNoAD':
-          event = NativeRenderEvent.onNoAD;
+          event = NativeUnifiedEvent.onNoAD;
           break;
         case 'onADLoaded':
-          event = NativeRenderEvent.onADLoaded;
+          event = NativeUnifiedEvent.onADLoaded;
           break;
         default:
       }
-      adEventCallback(event, call.arguments);
+      callback(event, call.arguments);
     }
   }
 
-  Future<Object> loadAD() async {
-    return await _channel.invokeMethod('load');
-  }
-
-  Future<void> destroyAD() async {
-    await _channel.invokeMethod('destory');
-  }
+  Future<void> loadAD() async => await _channel.invokeMethod('loadAD');
+  Future<void> showAD() async => await _channel.invokeMethod('showAD');
+  Future<void> closeAD() async => await _channel.invokeMethod('closeAD');
 }
 
-typedef NativeRenderCallback = Function(NativeRenderEvent event, Map args);
+typedef NativeUnifiedCallback = Function(NativeUnifiedEvent event, Map args);
 
-enum NativeRenderEvent { onNoAD, onADLoaded }
+enum NativeUnifiedEvent { onNoAD, onADLoaded }

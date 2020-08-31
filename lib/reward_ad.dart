@@ -5,18 +5,18 @@ import 'tencent_ad_plugin.dart';
 /// 激励视频广告
 class RewardAD {
   final String posID;
-  final RewardADCallback adEventCallback;
+  final RewardADCallback callback;
 
-  MethodChannel _methodChannel;
+  MethodChannel _channel;
 
-  RewardAD({this.posID, this.adEventCallback}) {
-    _methodChannel = MethodChannel('$rewardID\_$posID');
-    _methodChannel.setMethodCallHandler(_handleCall);
-    TencentADPlugin.toastRewardAD(posID: posID);
+  RewardAD({this.posID, this.callback}) {
+    _channel = MethodChannel('$rewardID\_$posID');
+    _channel.setMethodCallHandler(_handleCall);
+    TencentADPlugin.loadRewardAD(posID: posID);
   }
 
   Future<void> _handleCall(MethodCall call) async {
-    if (adEventCallback != null) {
+    if (callback != null) {
       RewardADEvent event;
       switch (call.method) {
         case 'onADExpose':
@@ -47,16 +47,16 @@ class RewardAD {
           event = RewardADEvent.onError;
           break;
       }
-      adEventCallback(event, call.arguments);
+      callback(event, call.arguments);
     }
   }
 
   Future<void> loadAD() async {
-    await _methodChannel.invokeMethod('load');
+    await _channel.invokeMethod('load');
   }
 
   Future<void> showAD() async {
-    await _methodChannel.invokeMethod('show');
+    await _channel.invokeMethod('show');
   }
 }
 

@@ -1,7 +1,7 @@
 name: tencent_ad_example
 description: 欢迎指正
 publish_to: 'https://pub.dev/packages/tencent_ad' 
-version: 1.0.3
+version: 1.0.4
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -9,11 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   tencent_ad:
     path: ../
-  cupertino_icons: 
-  flutter_svg:
+  flutter_svg: ^0.18.0
+  url_launcher: ^5.5.0
+  fluttertoast: ^7.0.2
 
 dev_dependencies:
   flutter_test:
@@ -23,26 +23,3 @@ flutter:
   
   assets:
     - assets/svg/
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  

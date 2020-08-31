@@ -1,7 +1,9 @@
 package tencent.ad
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.util.Log
 import android.view.View
@@ -18,10 +20,10 @@ import tencent.ad.O.TAG
 import tencent.ad.TencentADPlugin.Companion.activity
 
 class SplashAD(
-        context: Context,
-        messenger: BinaryMessenger?,
-        private val posID: String,
-        private var instance: SplashAD?
+    context: Context,
+    messenger: BinaryMessenger?,
+    private val posID: String,
+    private var instance: SplashAD?
 ) : SplashADListener {
     private val methodChannel = MethodChannel(messenger, "${O.splashID}_$posID")
     private val container = FrameLayout(context)
@@ -42,13 +44,14 @@ class SplashAD(
      * @param adListener      广告状态监听器
      * @param fetchDelay      拉取广告的超时时长：[3000, 5000]，0为默认
      */
+    @SuppressLint("SourceLockedOrientationActivity")
     @Suppress("SameParameterValue")
     private fun fetchSplashAD(
-            activity: Activity,
-            skipContainer: View?,
-            posID: String,
-            adListener: SplashADListener,
-            fetchDelay: Int
+        activity: Activity,
+        skipContainer: View?,
+        posID: String,
+        adListener: SplashADListener,
+        fetchDelay: Int
     ) {
         Log.i(TAG, "fetchSplashAD: ${O.splashID}_$posID")
         if (instance != null) return
@@ -56,7 +59,9 @@ class SplashAD(
             SplashAD(activity, it, posID, adListener, fetchDelay)
         } ?: SplashAD(activity, posID, adListener, fetchDelay)
         instance!!.fetchAndShowIn(container)
+        @Suppress("DEPRECATION")
         activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
     init {
@@ -73,11 +78,12 @@ class SplashAD(
     override fun onADDismissed() {
         closeAD()
         methodChannel.invokeMethod("onADDismissed", null)
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
     override fun onNoAD(error: AdError) {
         methodChannel.invokeMethod("onNoAD", null)
-        Log.i(TAG, "SplashAD onNoAD:无广告 错误码:${error.errorCode} ${error.errorMsg}")
+        Log.i(TAG, "SplashAD onNoAD: 无广告 错误码:${error.errorCode} ${error.errorMsg}")
         closeAD()
     }
 }

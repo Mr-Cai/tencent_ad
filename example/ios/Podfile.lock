@@ -1,11 +1,11 @@
 PODS:
   - Flutter (1.0.0)
-  - GDTMobSDK (4.11.8):
-    - GDTMobSDK/GDTMobSDK (= 4.11.8)
-  - GDTMobSDK/GDTMobSDK (4.11.8)
+  - GDTMobSDK (4.11.10):
+    - GDTMobSDK/GDTMobSDK (= 4.11.10)
+  - GDTMobSDK/GDTMobSDK (4.11.10)
   - tencent_ad (1.0.2):
     - Flutter
-    - GDTMobSDK (~> 4.11.8)
+    - GDTMobSDK (~> 4.11.10)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)

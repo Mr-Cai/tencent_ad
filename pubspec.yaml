@@ -2,7 +2,7 @@ name: tencent_ad
 description: "The plugin is bridge of the official SDK,
 allowing Chinese developers to make money"
 
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/Mr-Cai/tencent_ad
 
 environment:

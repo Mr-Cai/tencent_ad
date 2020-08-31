@@ -22,12 +22,16 @@ class IntersAD(
 
     override fun onMethodCall(methodCall: MethodCall, result: MethodChannel.Result) {
         when (methodCall.method) {
-            "load" -> {
+            "loadAD" -> {
                 iAD.loadAD()
                 result.success(true)
             }
-            "show" -> {
+            "showAD" -> {
                 showAD()
+                result.success(true)
+            }
+            "closeAD" -> {
+                closeAD()
                 result.success(true)
             }
             else -> result.notImplemented()

@@ -5,14 +5,14 @@ import 'o.dart';
 
 /// 闪屏广告
 class SplashAD {
-  MethodChannel _methodChannel;
+  MethodChannel _channel;
 
   final String posID;
   final SplashADEventCallback callBack;
 
   SplashAD({@required this.posID, this.callBack}) {
-    _methodChannel = MethodChannel('$splashID\_$posID');
-    _methodChannel.setMethodCallHandler(_handleMethodCall);
+    _channel = MethodChannel('$splashID\_$posID');
+    _channel.setMethodCallHandler(_handleMethodCall);
   }
 
   Future<void> _handleMethodCall(MethodCall call) async {

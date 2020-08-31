@@ -1,6 +1,7 @@
 package tencent.ad
 
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.qq.e.ads.rewardvideo.RewardVideoAD
 import com.qq.e.ads.rewardvideo.RewardVideoADListener
@@ -56,7 +57,7 @@ class RewardAD(
 
     override fun onError(error: AdError) {
         methodChannel.invokeMethod("onError", null)
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             loadRewardVideo().loadAD()
         }, 2000)
         Log.i(O.TAG, "RewardAD onNoAD:无广告 错误码:${error.errorCode} ${error.errorMsg}")
