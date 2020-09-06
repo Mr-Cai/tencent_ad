@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tencent_ad/o.dart';
-import 'package:tencent_ad/tencent_ad.dart';
+import 'package:tencent_ad/tencent_ad_plugin.dart';
 
+/// 插屏广告
 class IntersAD {
   final String posID;
-  final IntersADCallback adEventCallback;
+  final IntersADCallback callback;
 
-  MethodChannel _methodChannel;
+  MethodChannel _channel;
 
-  IntersAD({@required this.posID, this.adEventCallback}) {
-    _methodChannel = MethodChannel('$intersID\_$posID');
-    _methodChannel.setMethodCallHandler(_handleCall);
-    TencentADPlugin.toastIntersAD(posID: posID);
+  IntersAD({@required this.posID, this.callback}) {
+    _channel = MethodChannel('$intersID\_$posID');
+    _channel.setMethodCallHandler(_handleCall);
+    TencentADPlugin.loadIntersAD(posID: posID);
   }
 
   Future<void> _handleCall(MethodCall call) async {
-    if (adEventCallback != null) {
+    if (callback != null) {
       IntersADEvent event;
       switch (call.method) {
         case 'onNoAD':
@@ -41,17 +42,13 @@ class IntersAD {
           event = IntersADEvent.onADOpened;
           break;
       }
-      adEventCallback(event, call.arguments);
+      callback(event, call.arguments);
     }
   }
 
-  Future<void> loadAD() async {
-    await _methodChannel.invokeMethod('load');
-  }
-
-  Future<void> showAD() async {
-    await _methodChannel.invokeMethod('show');
-  }
+  Future<void> loadAD() async => await _channel.invokeMethod('loadAD');
+  Future<void> showAD() async => await _channel.invokeMethod('showAD');
+  Future<void> closeAD() async => await _channel.invokeMethod('closeAD');
 }
 
 typedef IntersADCallback = Function(IntersADEvent event, Map args);

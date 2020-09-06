@@ -1,13 +1,17 @@
 package tencent.ad
 
+import android.util.Log
 import com.qq.e.comm.managers.GDTADManager
+import com.qq.e.comm.managers.status.SDKStatus
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import tencent.ad.O.TAG
+import tencent.ad.O.appID
 import tencent.ad.O.bannerID
-import tencent.ad.O.nativeID
+import tencent.ad.O.nativeExpressID
 import java.util.*
 
 @Suppress("SpellCheckingInspection")
@@ -16,17 +20,21 @@ class TencentADPlugin : MethodCallHandler {
         val arguments = call.arguments as Map<*, *>
         when (call.method) {
             "config" -> {
-                O.appID = "${arguments["appID"]}"
-                GDTADManager.getInstance().initWith(activity, O.appID)
+                appID = "${arguments["appID"]}"
+                GDTADManager.getInstance().initWith(activity, appID)
                 result.success(true)
+            }
+            "getADVersion" -> {
+                Log.i(TAG, "getADVersion: ${SDKStatus.getIntegrationSDKVersion()}")
+                result.success(SDKStatus.getIntegrationSDKVersion())
             }
             "showSplash" -> {
                 val posID = "${arguments["posID"]}"
                 SplashAD(
-                        registrar.activity(),
-                        registrar.messenger(),
-                        posID,
-                        null
+                    registrar.activity(),
+                    registrar.messenger(),
+                    posID,
+                    null
                 ).showAD()
                 result.success(true)
             }
@@ -45,15 +53,11 @@ class TencentADPlugin : MethodCallHandler {
             "loadNativeRender" -> {
                 val posID = "${arguments["posID"]}"
                 if (rewardMap.containsKey(posID)) rewardMap[posID]?.closeAD()
-                renderMap[posID] = NativeADDIY(activity, posID, registrar.messenger())
+                renderMap[posID] = NativeADUnified(activity, posID, registrar.messenger())
                 result.success(true)
             }
             else -> result.notImplemented()
         }
-    }
-
-    init {
-        checkNotNull(O.appID) { "拉取广告数据前需要配置好ID" }
     }
 
     companion object {
@@ -63,7 +67,7 @@ class TencentADPlugin : MethodCallHandler {
 
         private val intersMap = HashMap<String, IntersAD>()
         private val rewardMap = HashMap<String, RewardAD>()
-        private val renderMap = HashMap<String, NativeADDIY>()
+        private val renderMap = HashMap<String, NativeADUnified>()
 
         fun removeInterstitial(posID: String?) {
             intersMap.remove(posID)
@@ -80,12 +84,12 @@ class TencentADPlugin : MethodCallHandler {
             instance = TencentADPlugin()
             MethodChannel(registrar.messenger(), O.pluginID).setMethodCallHandler(instance)
             registrar.platformViewRegistry().registerViewFactory(
-                    bannerID,
-                    BannerAD.BannerADFactory(registrar.messenger())
+                bannerID,
+                BannerAD.BannerADFactory(registrar.messenger())
             )
             registrar.platformViewRegistry().registerViewFactory(
-                    nativeID,
-                    NativeAD.NativeTemplateViewFactory(registrar.messenger())
+                nativeExpressID,
+                NativeADExpress.NativeADExpressFactory(registrar.messenger())
             )
         }
     }

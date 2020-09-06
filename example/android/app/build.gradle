@@ -26,7 +26,8 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
+    buildToolsVersion '28.0.3'
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -37,9 +38,9 @@ android {
     }
 
     defaultConfig {
-        applicationId "intelligent.fun_refresh"
-        minSdkVersion 16
-        targetSdkVersion 29
+        applicationId "tencent.ad"
+        minSdkVersion 22
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -56,5 +57,6 @@ flutter {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }

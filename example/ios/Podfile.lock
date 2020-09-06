@@ -1,11 +1,11 @@
 PODS:
   - Flutter (1.0.0)
-  - GDTMobSDK (4.11.8):
-    - GDTMobSDK/GDTMobSDK (= 4.11.8)
-  - GDTMobSDK/GDTMobSDK (4.11.8)
-  - tencent_ad (1.0.1):
+  - GDTMobSDK (4.11.10):
+    - GDTMobSDK/GDTMobSDK (= 4.11.10)
+  - GDTMobSDK/GDTMobSDK (4.11.10)
+  - tencent_ad (1.0.2):
     - Flutter
-    - GDTMobSDK (~> 4.11.8)
+    - GDTMobSDK (~> 4.11.10)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -24,7 +24,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   GDTMobSDK: 8961a9c5ea9303d4ffc9ef2ee44cc120359a1c8d
-  tencent_ad: f265b1998ee6ceb592e28fa056f1e106cf436ba3
+  tencent_ad: 07412b3715374bbfdaadd7bea239ae3370edb30d
 
 PODFILE CHECKSUM: c285e3e9c08287101dd1ee2af7cbf0cf860007f8
 

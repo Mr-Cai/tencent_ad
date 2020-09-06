@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'tencent_ad'
-  s.version          = '1.0.2'
+  s.version          = '1.0.4'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -16,7 +16,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'GDTMobSDK', '~> 4.11.8'
+  s.dependency 'GDTMobSDK', '~> 4.11.10'
   s.static_framework = true
 
   s.platform = :ios, '9.0'
@@ -24,4 +24,5 @@ A new flutter plugin project.
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
   s.swift_version = '5.0'
+
 end

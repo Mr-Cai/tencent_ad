@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tencent_ad/tencent_ad.dart';
+import 'package:tencent_ad/tencent_ad_plugin.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('tencent_ad');
@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await TencentADPlugin.tencentADVersion, '42');
+    expect(TencentADPlugin.tencentADVersion, '42');
   });
 }
