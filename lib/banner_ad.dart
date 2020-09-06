@@ -33,7 +33,7 @@ class BannerADState extends State<BannerAD> {
     );
   }
 
-  void _onPlatformViewCreated(int id) {
+  void onPlatformViewCreated(int id) {
     _channel = MethodChannel('$bannerID\_$id');
     _channel.setMethodCallHandler(_handleMethodCall);
     if (widget.autoRefresh == true) {
