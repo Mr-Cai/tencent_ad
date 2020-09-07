@@ -5,59 +5,28 @@ import 'custom.dart';
 
 import 'config_id.dart';
 
+final bannerKey = GlobalKey<BannerADState>();
 // 横幅广告示例
-void showBannerAD(BuildContext context) {
-  final _adKey = GlobalKey<BannerADState>();
-  showModalBottomSheet<void>(
-    context: context,
-    enableDrag: true,
-    builder: (context) {
-      return Container(
-        height: 120.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CupertinoButton(
-                  child: Text('刷新'),
-                  onPressed: () {
-                    _adKey.currentState.loadAD();
-                  },
-                ),
-                CupertinoButton(
-                  child: Text('关闭'),
-                  onPressed: () {
-                    _adKey.currentState.closeAD();
-                  },
-                ),
-              ],
-            ),
-            // 创建横幅广告
-            BannerAD(
-              posID: configID['bannerID'],
-              key: _adKey,
-              autoRefresh: true,
-              callBack: (event, args) {
-                switch (event) {
-                  case BannerEvent.onADClosed:
-                  case BannerEvent.onADCloseOverlay:
-                    _adKey.currentState.closeAD();
-                    break;
-                  case BannerEvent.onNoAD:
-                    _adKey.currentState.onNoAD().then((value) => toast(value));
-                    break;
-                  case BannerEvent.onADReceive:
-                    _adKey.currentState.loadAD();
-                    break;
-                  default:
-                }
-              },
-            ),
-          ],
-        ),
-      );
+Widget $BannerAD(BuildContext context) {
+  // 创建横幅广告
+  return BannerAD(
+    posID: configID['bannerID'],
+    key: bannerKey,
+    autoRefresh: true,
+    callBack: (event, args) {
+      switch (event) {
+        case BannerEvent.onADClosed:
+        case BannerEvent.onADCloseOverlay:
+          bannerKey.currentState.closeAD();
+          break;
+        case BannerEvent.onNoAD:
+          bannerKey.currentState.onNoAD().then((value) => toast(value));
+          break;
+        case BannerEvent.onADReceive:
+          bannerKey.currentState.loadAD();
+          break;
+        default:
+      }
     },
   );
 }

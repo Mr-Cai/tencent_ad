@@ -154,92 +154,103 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 3,
+      body: Column(
         children: [
-          ItemIcon(
-            icon: 'splash_ad',
-            name: '闪屏广告',
-            onTap: () {
-              SplashAD(
-                  posID: configID['splashID'],
-                  callBack: (event, args) {
-                    switch (event) {
-                      case SplashADEvent.onNoAD:
-                      case SplashADEvent.onADDismissed:
-                        SystemChrome.setEnabledSystemUIOverlays([
-                          SystemUiOverlay.top,
-                          SystemUiOverlay.bottom,
-                        ]);
-                        SystemChrome.setSystemUIOverlayStyle(
-                          SystemUiOverlayStyle(
-                              statusBarColor: Colors.transparent),
-                        );
-                        break;
-                      default:
-                    }
-                  }).showAD();
-            },
+          Flexible(
+            child: Container(
+              child: GridView.count(
+                physics: BouncingScrollPhysics(),
+                crossAxisCount: 3,
+                children: [
+                  ItemIcon(
+                    icon: 'splash_ad',
+                    name: '闪屏广告',
+                    onTap: () {
+                      SplashAD(
+                          posID: configID['splashID'],
+                          callBack: (event, args) {
+                            switch (event) {
+                              case SplashADEvent.onNoAD:
+                              case SplashADEvent.onADDismissed:
+                                SystemChrome.setEnabledSystemUIOverlays([
+                                  SystemUiOverlay.top,
+                                  SystemUiOverlay.bottom,
+                                ]);
+                                SystemChrome.setSystemUIOverlayStyle(
+                                  SystemUiOverlayStyle(
+                                      statusBarColor: Colors.transparent),
+                                );
+                                break;
+                              default:
+                            }
+                          }).showAD();
+                    },
+                  ),
+                  ItemIcon(
+                    icon: 'banner_ad',
+                    name: '横幅广告',
+                    onTap: () async {
+                      await bannerKey.currentState.closeAD();
+                      bannerKey.currentState.loadAD();
+                    },
+                  ),
+                  ItemIcon(
+                    icon: 'inters_ad',
+                    name: '插屏广告',
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => IntersADWidget(
+                          configID['intersID'],
+                        ),
+                      );
+                    },
+                  ),
+                  ItemIcon(
+                    icon: 'reward_ad',
+                    name: '激励视频广告',
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => RewardADWidget(
+                          configID['rewardID'],
+                        ),
+                      );
+                    },
+                  ),
+                  ItemIcon(
+                    icon: 'native_ad_express',
+                    name: '原生模板广告',
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return NativeExpressPage();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  ItemIcon(
+                    icon: 'native_ad_unified',
+                    name: '原生自渲染广告',
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return NativeUnifiedPage();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
-          ItemIcon(
-            icon: 'banner_ad',
-            name: '横幅广告',
-            onTap: () {
-              showBannerAD(context);
-            },
-          ),
-          ItemIcon(
-            icon: 'inters_ad',
-            name: '插屏广告',
-            onTap: () {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => IntersADWidget(
-                  configID['intersID'],
-                ),
-              );
-            },
-          ),
-          ItemIcon(
-            icon: 'reward_ad',
-            name: '激励视频广告',
-            onTap: () {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => RewardADWidget(
-                  configID['rewardID'],
-                ),
-              );
-            },
-          ),
-          ItemIcon(
-            icon: 'native_ad_express',
-            name: '原生模板广告',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return NativeExpressPage();
-                  },
-                ),
-              );
-            },
-          ),
-          ItemIcon(
-            icon: 'native_ad_unified',
-            name: '原生自渲染广告',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return NativeUnifiedPage();
-                  },
-                ),
-              );
-            },
-          ),
+          $BannerAD(context),
         ],
       ),
     );

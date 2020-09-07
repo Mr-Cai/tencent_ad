@@ -11,11 +11,13 @@ class BannerAD extends StatefulWidget {
     this.callBack,
     this.autoRefresh: true,
     this.width,
+    this.height,
   }) : super(key: key);
 
   final String posID;
   final bool autoRefresh;
   final double width;
+  final double height;
   final BannerCallback callBack;
 
   @override
@@ -29,11 +31,24 @@ class BannerADState extends State<BannerAD> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width ?? double.infinity,
-      height: 64.0,
+      height: widget.height ?? 64.0,
+      child: defaultTargetPlatform == TargetPlatform.iOS
+          ? UiKitView(
+              viewType: '$bannerID',
+              onPlatformViewCreated: _onPlatformViewCreated,
+              creationParams: {'posID': widget.posID},
+              creationParamsCodec: StandardMessageCodec(),
+            )
+          : AndroidView(
+              viewType: '$bannerID',
+              onPlatformViewCreated: _onPlatformViewCreated,
+              creationParams: {'posID': widget.posID},
+              creationParamsCodec: StandardMessageCodec(),
+            ),
     );
   }
 
-  void onPlatformViewCreated(int id) {
+  void _onPlatformViewCreated(int id) {
     _channel = MethodChannel('$bannerID\_$id');
     _channel.setMethodCallHandler(_handleMethodCall);
     if (widget.autoRefresh == true) {

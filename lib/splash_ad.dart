@@ -61,4 +61,6 @@ enum SplashADEvent {
 }
 
 typedef SplashADEventCallback = Function(
-    SplashADEvent event, dynamic arguments);
+  SplashADEvent event,
+  dynamic arguments,
+);
